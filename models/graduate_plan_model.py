@@ -1,4 +1,4 @@
-# graduate_plan_model.py
+
 class GraduateStudyPlan:
     def __init__(self, courseNumber, courseName, concentration):
         # Initializes the study plan with course details and concentration
