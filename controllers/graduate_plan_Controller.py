@@ -1,42 +1,48 @@
-import pandas as pd 
-import sys 
-import os 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) 
-from models.graduate_plan_model import GraduateStudyPlan 
-from models.course_model import Course 
+import pandas as pd
+from models.graduate_plan_model import GraduateStudyPlan
 
-class GraduatePlanController: 
-    def __init__(self, graduateStudyPlanPath): 
-        # Initialize the controller with the path to the graduate study plan file 
-        self.graduateStudyPlanPath = graduateStudyPlanPath 
-        self.studyPlanCourses = []  # List to store GraduateStudyPlan objects 
+class GraduatePlanController:
+    def __init__(self, studyPlanPath):
+        self.studyPlanPath = studyPlanPath
+    
+    # Load the graduate study plan from an Excel file
+    def loadGraduateStudyPlan(self):
+        # Load the Excel file into a DataFrame
+        df = pd.read_excel(self.studyPlanPath)
 
-    def loadGraduateStudyPlan(self): 
-        # Load the graduate study plan from an Excel file and parse the required columns 
-        df = pd.read_excel(self.graduateStudyPlanPath) 
-        # Assuming the file has 'Course Number', 'Course Name', and 'Concentration' columns 
-        for index, row in df.iterrows(): 
-            courseNumber = row['Course Number'] 
-            courseName = row['Course Name'] 
-            concentration = row['Concentration'] 
-          
-            # Create a GraduateStudyPlan object and add it to the studyPlanCourses list 
-            studyPlan = GraduateStudyPlan(courseNumber, courseName, concentration) 
-            self.studyPlanCourses.append(studyPlan) 
-          
-        return self.studyPlanCourses 
+        # Ensure correct column names: "Course number", "Course name", "Required in #1", "Required in #2"
+        courses = []
+        for index, row in df.iterrows():
+            course = GraduateStudyPlan(
+                courseNumber=row['Course number'],      # Corrected column name
+                courseName=row['Course name'],          # Corrected column name
+                requiredIn1=row['Required in #1'],      # First required concentration
+                requiredIn2=row['Required in #2']       # Second required concentration
+            )
+            courses.append(course)
+        
+        return courses
 
-    def getCoursesForConcentration(self, concentration): 
-        # Retrieve a list of courses for the given concentration 
-        filtered_courses = [course for course in self.studyPlanCourses if course.getConcentration() == concentration] 
-        return filtered_courses 
+    # Get all courses required in a specific concentration
+    def getCoursesForConcentration(self, concentration):
+        study_plan_courses = self.loadGraduateStudyPlan()
+        
+        # Filter by concentration in either "Required in #1" or "Required in #2"
+        filtered_courses = [
+            course for course in study_plan_courses 
+            if concentration in (course.getRequiredIn1(), course.getRequiredIn2())
+        ]
+        
+        return filtered_courses
 
-    def matchCoursesWithTaken(self, takenCourses): 
-        # This function matches the courses in the study plan with the courses the student has already taken 
-        remainingCourses = [] 
-        for course in self.studyPlanCourses: 
-            # If the course from the study plan is not in the list of taken courses, add it to remainingCourses 
-            if course.getCourseNumber() not in [taken.getCourseName() for taken in takenCourses]: 
-                remainingCourses.append(course) 
-
-        return remainingCourses
+    # Match courses already taken with the ones in the study plan
+    def matchCoursesWithTaken(self, takenCourses):
+        study_plan_courses = self.loadGraduateStudyPlan()
+        
+        # Filter out courses already taken
+        remaining_courses = [
+            course for course in study_plan_courses
+            if not any(taken.getCourseNumber() == course.getCourseNumber() for taken in takenCourses)
+        ]
+        
+        return remaining_courses
