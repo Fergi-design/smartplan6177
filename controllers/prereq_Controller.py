@@ -4,6 +4,8 @@ import re
 # URL of the course catalog page
 url = "https://catalog.columbusstate.edu/course-descriptions/cpsc/"
 
+#Code assistance and troubleshooting by ChatGPT
+
 def fetch_page(url):
     """Fetch the webpage content."""
     try:
