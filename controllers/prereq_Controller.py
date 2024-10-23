@@ -1,8 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-# URL of the course catalog page
-url = "https://catalog.columbusstate.edu/course-descriptions/cpsc/"
+# URL of the CPSC and CYBR course catalog page
+cpsc_url = "https://catalog.columbusstate.edu/course-descriptions/cpsc/"
+cybr_url = "https://catalog.columbusstate.edu/course-descriptions/cybr/"
+
 
 #Code assistance and troubleshooting by ChatGPT
 
@@ -31,8 +33,8 @@ def fetch_page(url):
         
         
         # Extract course code and name (e.g., CPSC 6109. Advanced Algorithms)
-        match = re.match(r"^(CPSC \d{4})+(.*)", course_text)
-        print(match)
+        match = re.match(r"^(CPSC|CYBR \d{4})+(.*)", course_text)
+        
         
         if match:
             course_code = match.group(1)
@@ -59,20 +61,23 @@ def fetch_page(url):
 
     return courses
 
-html_content = fetch_page(url)
+cpsc_content = fetch_page(cpsc_url) #CPSC course website
+cybr_content = fetch_page(cybr_url) #CYBR course website
 
-#Gather List of Courses from the CPSC course descriptions
-courses = parse_courses(html_content)
 
-def extract_course_codesCPCS(text):
-    """Extract all CPSC course codes from the given text."""
-    # Use re.findall to get all occurrences of "CPSC ####"
-    clean_text = text.replace('\xa0', ' ')
-    course_codes = re.findall(r"CPSC\s\d{4}(?=\D|$)", clean_text)
+#Gather List of Courses from the CPSC & CYBR course descriptions
+cpsc_courses = parse_courses(cpsc_content)
+cybr_courses = parse_course(cybr_content)
+
+def extract_course_codes(text):
+    """Extract all CPSC & CYBR course codes from the given text."""
+    # Use re.findall to get all occurrences of "CPSC ####, CYBR ####"
+    clean_text = text.replace('\xa0', ' ') # cleaning output of text to be properly captured
+    course_codes = re.findall(r"CPSC\s\d{4}(?=\D|$)|CYBR\s\d{4}(?=\D|$)", clean_text)
 
     return course_codes
 
-def find_CPSCpreReq(courseNum, courses):
+def find_preReq(courseNum, courses):
     """Find the prerequisites for a given course number."""
     for course in courses:
         if courseNum == course['Course Code']:
