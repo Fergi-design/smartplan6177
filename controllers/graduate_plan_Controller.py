@@ -1,4 +1,7 @@
 import pandas as pd
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models.graduate_plan_model import GraduateStudyPlan
 
 class GraduatePlanController:
@@ -54,3 +57,16 @@ class GraduatePlanController:
         ]
         
         return remaining_courses
+
+
+# Test the GraduatePlanController
+# gc = GraduatePlanController("Graduate Study Plans -revised.xlsx")
+# study_plan = gc.loadGraduateStudyPlan()
+# for course in study_plan:
+#   print(course.getCourseNumber(), course.getCourseName(), course.getRequiredIn1(), course.getRequiredIn2())
+
+# # Test the getCoursesForConcentration method
+# concentration = "ACS General"
+# acs_courses = gc.getCoursesForConcentration(concentration, study_plan)
+# for course in acs_courses:
+#     print(course.getCourseNumber(), course.getCourseName(), course.getRequiredIn1(), course.getRequiredIn2())

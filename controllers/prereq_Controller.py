@@ -90,7 +90,6 @@ class PrereqController:
 
     def getAll_PreReq(self, courses):
         """Find the prerequisites for a given course number."""
-        
         outputList = []
         # print(courses)
         for course in courses:
@@ -101,4 +100,13 @@ class PrereqController:
                 outputList.append(preq)
         return outputList
 
+
+
+# pc = PrereqController()
+# cpsc_courses = PrereqController.parse_courses(PrereqController.fetch_page(cpsc_url))
+# cybr_courses = PrereqController.parse_courses(PrereqController.fetch_page(cybr_url))
+# cpsc_courses_preReq = pc.getAll_PreReq(cpsc_courses)
+# cybr_courses_preReq = pc.getAll_PreReq(cybr_courses)
+# for preq in cybr_courses_preReq:
+#     print(preq.getCourseNumber(), preq.getPreqcourseNumber())
 

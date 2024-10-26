@@ -48,7 +48,7 @@ class CoursePlanningView:
         gsp_courses = gc.loadGraduateStudyPlan()
         # Get the courses from the Degreeworks PDF and student data
         datafromDWRCS, student_data = CourseController.getDataFromDWRCS(cc)
-        courses_taken = CourseController.formatDWData(datafromDWRCS)
+        courses_taken = cc.formatDWData(datafromDWRCS)
 
         courses_taken_new = []
         #Remove Undergraduate courses from the list
@@ -237,5 +237,6 @@ class CoursePlanningView:
 
 
 # cp = CoursePlanningView('','','')
+# #4-year schedule.xlsx, audit-909502440-AB85SKL0.pdf, Graduate Study Plans -revised.xlsx
 # cp.getUserDocumentFilePath() #Place files in same folder and enter the file names
 # cp.coursePlanning()
