@@ -133,7 +133,7 @@ class CourseController:
         file.close()
         return output,  sc.setupStudentData(studentData)  # return array and student data
 
-    def formatDWData(courseData):
+    def formatDWData(self, courseData):
         DW_courses = []
         courseData.pop()   # remove unwanted student data from array
         # format data from DWRCS to be used in other contollers
@@ -147,11 +147,17 @@ class CourseController:
         return DW_courses
 
 
-#Testing the getDataFromFYS
-# c = CourseController("path to four year schedule excel", "path to DWRCS pdf")
-#courses = CourseController.checkDataFromFYS(CourseController.getDataFromFYS(c))
-# print(courses[0].getCourseName())
-# print(courses[0].getCourseTitle())
-# print(courses[0].getTimesAvailable())
-#print(c.getDataFromDWRCS())
-#print(c.formatDWData(c.getDataFromDWRCS()))
+#Testing the FYS
+# c = CourseController("4-year schedule.xlsx", "audit-909502440-AB85SKL0.pdf")
+# courses = CourseController.checkDataFromFYS(CourseController.getDataFromFYS(c))
+# for course in courses:
+#     print(course.getCourseNumber(), course.getCourseName(), course.getTimesAvailable())
+#     print("\n")
+
+#DW Testing
+# datafromDWRCS, student_data = c.getDataFromDWRCS()
+# dw_formated = c.formatDWData(datafromDWRCS)
+
+# for course in dw_formated:
+#     print(course.getCourseNumber(), course.getCourseName(), course.getTimesAvailable())
+#     print("\n")
