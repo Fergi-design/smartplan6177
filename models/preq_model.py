@@ -1,18 +1,18 @@
 # Model file for courses
 
 class Preq:
-    def __init__(self, courseName, preqName):
-        self.courseName = courseName
-        self.preqName = preqName
+    def __init__(self, courseNumber, preqcourseNumber):
+        self.courseNumber = courseNumber
+        self.preqcourseNumber = preqcourseNumber
 
-    def getCourseName(self):
-        return self.courseName
+    def getCourseNumber(self):
+        return self.courseNumber
 
-    def getPreqName(self):
-        return self.preqName
+    def getPreqcourseNumber(self):
+        return self.preqcourseNumber
 
-    def setCourseName(self, courseName):
-        self.courseName = courseName
+    def setCourseNumber(self, courseNumber):
+        self.courseNumber = courseNumber
 
-    def setPreqName(self, preqName):
-        self.preqName = preqName
+    def setPreqcourseNumber(self, preqcourseNumber):
+        self.preqcourseNumber = preqcourseNumber

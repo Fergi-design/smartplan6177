@@ -4,11 +4,15 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models.course_model import Course
 from pypdf import PdfReader
-#controller for course
+from controllers.student_Controller import StudentController
 
+#controller for course
 FYS_courses = []
+sc = StudentController([])
 
 class CourseController:
+    #student data from student controller
+    
     def __init__(self, FYS, DWRCS):
         self.FYS = FYS
         self.DWRCS = DWRCS
@@ -70,10 +74,10 @@ class CourseController:
         return filtered_array
 
     def getDataFromDWRCS(self):
-        filename = self.DWRCS  # instantiate variable for DegreeWorks file
         output = []   # array to be returned by method
+        studentData = []   # array to store student data
         while True:
-            filename = input("\nPlease enter the name of the PDF file from DegreeWorks: ")
+            filename = self.DWRCS  
             # check if PdfReader works; check if file exists
             try:   
                 reader = PdfReader(filename)
@@ -82,6 +86,7 @@ class CourseController:
             # file not found; restart loop
             except:   
                 print("\nInvalid input or file not found. Try again.")
+                break
 
         # creating a pdf reader object
         reader = PdfReader(filename)
@@ -115,16 +120,38 @@ class CourseController:
                 elif " Summer " in line:
                     str = line.strip()
                     output.append(str)
-                
+                elif " Level " in line:
+                    str = line.strip()
+                    studentData.append(str)
+                elif " Concentration " in line:
+                    str = line.strip()
+                    studentData.append(str)
+                elif " Major " in line:
+                    str = line.strip()
+                    studentData.append(str)
+
         file.close()
-        return output   # return array
+        return output,  sc.setupStudentData(studentData)  # return array and student data
+
+    def formatDWData(courseData):
+        DW_courses = []
+        courseData.pop()   # remove unwanted student data from array
+        # format data from DWRCS to be used in other contollers
+        for course in courseData:
+            courseNumber = course[0:9]
+            courseName = course[10: course.find("(")].replace("CURR", "").strip()
+            courseSemester = course[course.find(")")+1: ].strip()
+            DW_courses.append(Course(courseNumber, courseName, courseSemester))
         
+        
+        return DW_courses
+
 
 #Testing the getDataFromFYS
-'''
-c = CourseController("path to four year schedule excel", '')
-courses = CourseController.checkDataFromFYS(CourseController.getDataFromFYS(c))
-print(courses[0].getCourseName())
-print(courses[0].getCourseTitle())
-print(courses[0].getTimesAvailable())
-'''
+# c = CourseController("path to four year schedule excel", "path to DWRCS pdf")
+#courses = CourseController.checkDataFromFYS(CourseController.getDataFromFYS(c))
+# print(courses[0].getCourseName())
+# print(courses[0].getCourseTitle())
+# print(courses[0].getTimesAvailable())
+#print(c.getDataFromDWRCS())
+#print(c.formatDWData(c.getDataFromDWRCS()))

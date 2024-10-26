@@ -1,18 +1,25 @@
 #Student Model
 
 class Student:
-    def __init__(self, studentYear, studentMayor):
+    def __init__(self, studentYear, studentMajor, studentConcentration):
         self.studentYear = studentYear
-        self.studentMayor = studentMayor
+        self.studentMajor = studentMajor
+        self.studentConcentration = studentConcentration
     
     def getStudentYear(self):
         return self.studentYear
     
-    def getStudentMayor(self):
-        return self.studentMayor
+    def getStudentMajor(self):
+        return self.studentMajor
     
     def setStudentYear(self, studentYear):
         self.studentYear = studentYear
 
-    def setStudentMayor(self, studentMayor):
-        self.studentMayor = studentMayor
+    def setStudentMajor(self, studentMajor):
+        self.studentMajor = studentMajor
+
+    def setStudentConcentration(self, studentConcentration):
+        self.studentConcentration = studentConcentration
+    
+    def getStudentConcentration(self):
+        return self.studentConcentration
