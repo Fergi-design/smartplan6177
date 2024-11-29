@@ -240,3 +240,7 @@ class CoursePlanningView:
 # #4-year schedule.xlsx, audit-909502440-AB85SKL0.pdf, Graduate Study Plans -revised.xlsx
 # cp.getUserDocumentFilePath() #Place files in same folder and enter the file names
 # cp.coursePlanning()
+if __name__=="__main__":
+    cp = CoursePlanningView('','','')
+    cp.getUserDocumentFilePath() #Place files in same folder and enter the file names
+    cp.coursePlanning()
