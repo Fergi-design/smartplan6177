@@ -83,7 +83,7 @@ SmartPlanningTool/
 Follow these steps to set up the project on your local machine:
 
 1. **Download the Source Code**:
-   - Download the ZIP file from the (https://github.com/Fergi-design/smartplan6177.git) and extract it to a folder on your computer.
+   - Download the ZIP file from the repository (https://github.com/Fergi-design/smartplan6177.git) and extract it to a folder on your computer.
 
 2. **Install Dependencies**:
    - Ensure you have Python 3.8 or higher installed on your system.
