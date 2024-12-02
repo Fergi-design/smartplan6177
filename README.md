@@ -52,6 +52,7 @@ After downloading and opening the project, follow the setup instructions in the 
 ## **File Structure**
 
 The project is organized into the following directory structure:
+
 SmartPlanningTool/
 ├── controllers/
 │   ├── course_controller.py
@@ -68,6 +69,7 @@ SmartPlanningTool/
 ├── input/
 │   └── graduate_study_plan.xlsx
 ├── README.md
+
 
 
 - **controllers/**: Contains the logic for processing data and managing interactions between the models and views.
